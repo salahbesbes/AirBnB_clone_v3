@@ -5,6 +5,7 @@ from models.user import User
 from api.v1.views import app_views
 from models import storage
 from flask import jsonify
+from flask import abort
 
 
 @app_views.route('/users', strict_slashes=False)
@@ -23,7 +24,7 @@ def get():
     """ Retrieves the list of all User objects """
     result = storage.get(User, user_id)
     if result is None:
-        abort (404)
+        abort(404)
     return (jsonify(result.to_dict()))
 
 @delete.route('/users/<string:user_id>', method=['GET', 'DELETE'], strict_slashes=False)
@@ -31,7 +32,7 @@ def delete():
     """Delete a User object"""
     result = storage.get(User, user_id)
     if result is None:
-        abort (404)
+        abort(404)
     storage.delete()
     storage.save()
     return (jsonify({}), 200)
@@ -39,7 +40,7 @@ def delete():
 @create.route('/users/<string:user_id>', method=['POST'], strict_slashes=False)
 def post():
     """Creates a User object """
-    if request.get_json is None:
+    if request.get_json() is None:
         return (jsonify({'error' : 'Not a JSON'}), 400)
     mail = 0
     pwd = 0
@@ -62,7 +63,7 @@ def put()
     """Updates a User object"""
     result = storage.get(User, user_id) 
     if result is None:
-        abort (404)
+        abort(404)
     else:
         if request.get_json is None:
             return (jsonify({'error' : 'not JSON'}), 404)
