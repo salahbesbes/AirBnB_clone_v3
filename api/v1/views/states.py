@@ -7,8 +7,7 @@ from models import storage
 from flask import jsonify
 
 
-@app_views.route('/states', strict_slashes=False)
-def states():
+def all_states():
     """ get all State instance from the database
     Returns:
         json: list of State instance
@@ -19,7 +18,6 @@ def states():
     return jsonify(result)
 
 
-@app_views.route('/states/<id>', strict_slashes=False)
 def get_state(id):
     """ get state from the database using the storage instance
     Args:
@@ -37,9 +35,6 @@ def get_state(id):
     abort(404, description="Not Found")
 
 
-@app_views.route('/states/<id>',
-                 methods=['DELETE'],
-                 strict_slashes=False)
 def delete_state(id):
     """ we delete the instance corresponding on the id sent in the route
     Args:
@@ -57,9 +52,6 @@ def delete_state(id):
     abort(404, description='Not Found')
 
 
-@app_views.route('/states',
-                 methods=['POST'],
-                 strict_slashes=False)
 def create_state():
     """ create new State instance based on the json sent in the request
         if the request doesnt contain a valid json we abord and send a
@@ -72,18 +64,15 @@ def create_state():
         req = request.get_json(force=True)
     except Exception:
         abort(400, description="Not a JSON")
-
+    print(req.get('name'))
     if req.get('name') is None:
         abort(400, description='Missing name')
-    new_State = State(req)
+    new_State = State(**req)
     storage.new(new_State)
     storage.save()
     return jsonify(new_State.to_dict()), 201
 
 
-@app_views.route('/states/<state_id>',
-                 methods=['PUT'],
-                 strict_slashes=False)
 def update_state(state_id):
     """ route take as argument the state id, get
         the instance and update it
@@ -110,3 +99,25 @@ def update_state(state_id):
     obj_found.save()
     storage.save()
     return jsonify(obj_found.to_dict()), 200
+
+
+@app_views.route('/states',
+                 strict_slashes=False,
+                 methods=['GET', 'POST'],
+                 defaults={'state_id': None})
+@app_views.route('/states/<state_id>',
+                 strict_slashes=False,
+                 methods=['DELETE', 'PUT', 'GET'])
+def handle_State(state_id):
+    if state_id:
+        if request.method == 'GET':
+            return get_state(state_id)
+        if request.method == 'PUT':
+            return update_state(state_id)
+        if request.method == 'DELETE':
+            return delete_state(state_id)
+    else:
+        if request.method == 'GET':
+            return all_states()
+        if request.method == 'POST':
+            return create_state()

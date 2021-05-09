@@ -23,17 +23,10 @@ def teardown_db(exception):
 def handle_exception(e):
     """Return JSON instead of HTML for HTTP errors."""
     # TODO: explore the e Exception methods
-    # this methode get called when ever abort() is called
-    # return jsonify({
-    #     "code": e.code,
-    #     "name": e.name,
-    #     "description": e.description,
-    # })
     if e.code == 404:
         return jsonify({"error": e.description})
     if e.code == 400:
         return jsonify({"error": e.description})
-    # return jsonify({"error": e.description})
 
 
 if __name__ == '__main__':
