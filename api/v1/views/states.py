@@ -34,7 +34,7 @@ def get_state(id):
         if obj_id == id:
             return jsonify(obj.to_dict())
     # if not found raise 404 error
-    return abort(404, description="Not Found")
+    abort(404, description="Not Found")
 
 
 @app_views.route('/states/<id>',
@@ -54,7 +54,7 @@ def delete_state(id):
         obj_found.delete()
         storage.save()    # commit all changes
         return {}
-    return abort(404, description='Not Found')
+    abort(404, description='Not Found')
 
 
 @app_views.route('/states',

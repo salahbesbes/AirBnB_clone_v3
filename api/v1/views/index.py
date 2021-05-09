@@ -29,5 +29,5 @@ def all_classes():
     """
     result = {}
     for key, cls in classes.items():
-        result[key] = len(storage.all(cls))
+        result[key] = storage.count(cls)
     return jsonify(result)
