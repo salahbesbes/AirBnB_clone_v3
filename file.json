@@ -1,17 +1,44 @@
 {
-  "State.81d2c827-7bb9-4ccb-ab7a-a8f200612738": {
-    "name": "California",
-    "created_at": "2021-05-09T00:58:12.646552",
-    "updated_at": "2021-05-09T00:58:12.646625",
-    "id": "81d2c827-7bb9-4ccb-ab7a-a8f200612738",
+  "Amenity.1465fe9c-94e8-4235-a5d2-ecc615848a82": {
+    "id": "1465fe9c-94e8-4235-a5d2-ecc615848a82",
+    "created_at": "2021-05-09T02:34:41.847147",
+    "updated_at": "2021-05-09T02:34:41.847147",
+    "__class__": "Amenity"
+  },
+  "BaseModel.23cedf1a-fdeb-44f5-82d2-18ccdc3e907d": {
+    "id": "23cedf1a-fdeb-44f5-82d2-18ccdc3e907d",
+    "created_at": "2021-05-09T02:34:41.847198",
+    "updated_at": "2021-05-09T02:34:41.847198",
+    "__class__": "BaseModel"
+  },
+  "City.e789bd0b-3ab6-46c5-bf3f-87caa3ff6fa1": {
+    "id": "e789bd0b-3ab6-46c5-bf3f-87caa3ff6fa1",
+    "created_at": "2021-05-09T02:34:41.847255",
+    "updated_at": "2021-05-09T02:34:41.847255",
+    "__class__": "City"
+  },
+  "Place.0a7dbc06-0ef7-4495-b107-5891dcfe2fa5": {
+    "id": "0a7dbc06-0ef7-4495-b107-5891dcfe2fa5",
+    "created_at": "2021-05-09T02:34:41.847310",
+    "updated_at": "2021-05-09T02:34:41.847310",
+    "__class__": "Place"
+  },
+  "Review.4594cd28-14a6-49ab-8c7f-a638dde8e52c": {
+    "id": "4594cd28-14a6-49ab-8c7f-a638dde8e52c",
+    "created_at": "2021-05-09T02:34:41.847365",
+    "updated_at": "2021-05-09T02:34:41.847365",
+    "__class__": "Review"
+  },
+  "State.ff5c4cdb-ba71-4926-9979-6b04da583077": {
+    "id": "ff5c4cdb-ba71-4926-9979-6b04da583077",
+    "created_at": "2021-05-09T02:34:41.847418",
+    "updated_at": "2021-05-09T02:34:41.847418",
     "__class__": "State"
   },
-  "City.17f53c23-e079-45a0-8915-ed1c15690d90": {
-    "state_id": "81d2c827-7bb9-4ccb-ab7a-a8f200612738",
-    "name": "San Francisco",
-    "created_at": "2021-05-09T00:58:12.647196",
-    "updated_at": "2021-05-09T00:58:12.647247",
-    "id": "17f53c23-e079-45a0-8915-ed1c15690d90",
-    "__class__": "City"
+  "User.0ba4fb4c-f2b6-43b7-9b16-32b304de055b": {
+    "id": "0ba4fb4c-f2b6-43b7-9b16-32b304de055b",
+    "created_at": "2021-05-09T02:34:41.847470",
+    "updated_at": "2021-05-09T02:34:41.847470",
+    "__class__": "User"
   }
 }

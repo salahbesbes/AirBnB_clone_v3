@@ -30,8 +30,8 @@ class BaseModel:
         if kwargs:
             for key, value in kwargs.items():
                 if key != "__class__":
-                    if key == 'password':  # if plain password passed hash it
-                        value = hashlib.md5(value.encode('utf8')).hexdigest()
+                    # if key == 'password':  # if plain password passed hash it
+                    #     value = hashlib.md5(value.encode('utf8')).hexdigest()
                     setattr(self, key, value)
             if kwargs.get("created_at", None) and type(self.created_at) is str:
                 self.created_at = datetime.strptime(kwargs["created_at"], time)
