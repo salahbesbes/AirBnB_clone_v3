@@ -1,0 +1,43 @@
+{
+  "State.591255d7-8f48-4855-ac98-1dd05017a4b2": {
+    "name": "California",
+    "created_at": "2021-05-09T21:40:24.099217",
+    "updated_at": "2021-05-09T21:40:24.099301",
+    "id": "591255d7-8f48-4855-ac98-1dd05017a4b2",
+    "__class__": "State"
+  },
+  "City.986ba8c1-1003-4518-b0e4-71fe10f8346d": {
+    "state_id": "591255d7-8f48-4855-ac98-1dd05017a4b2",
+    "name": "San Francisco",
+    "created_at": "2021-05-09T21:40:24.099898",
+    "updated_at": "2021-05-09T21:40:24.099949",
+    "id": "986ba8c1-1003-4518-b0e4-71fe10f8346d",
+    "__class__": "City"
+  },
+  "User.c2d2833e-b4a9-442b-9bd7-fe3894b72fdc": {
+    "email": "john@snow.com",
+    "_password": "9ae73c65f418e6f79ceb4f0e4a4b98d5",
+    "created_at": "2021-05-09T21:40:24.100700",
+    "updated_at": "2021-05-09T21:40:24.100753",
+    "id": "c2d2833e-b4a9-442b-9bd7-fe3894b72fdc",
+    "__class__": "User"
+  },
+  "Place.b8347132-cafc-4668-bd47-8eb998466e98": {
+    "user_id": "c2d2833e-b4a9-442b-9bd7-fe3894b72fdc",
+    "city_id": "986ba8c1-1003-4518-b0e4-71fe10f8346d",
+    "name": "House 1",
+    "created_at": "2021-05-09T21:40:24.101404",
+    "updated_at": "2021-05-09T21:40:24.101470",
+    "id": "b8347132-cafc-4668-bd47-8eb998466e98",
+    "__class__": "Place"
+  },
+  "Place.6c27a55d-abc2-4898-9bb9-b7b4668c56ab": {
+    "user_id": "c2d2833e-b4a9-442b-9bd7-fe3894b72fdc",
+    "city_id": "986ba8c1-1003-4518-b0e4-71fe10f8346d",
+    "name": "House 2",
+    "created_at": "2021-05-09T21:40:24.102307",
+    "updated_at": "2021-05-09T21:40:24.102354",
+    "id": "6c27a55d-abc2-4898-9bb9-b7b4668c56ab",
+    "__class__": "Place"
+  }
+}

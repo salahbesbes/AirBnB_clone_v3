@@ -8,7 +8,7 @@ import models
 from sqlalchemy import Column, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 import uuid
-import hashlib
+from hashlib import md5
 
 time = "%Y-%m-%dT%H:%M:%S.%f"
 
@@ -69,9 +69,8 @@ class BaseModel:
         new_dict["__class__"] = self.__class__.__name__
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
-
         plain_password = new_dict.get('password')
-        if plain_password and models.storage_t == 'db':
+        if plain_password and models.storage_t != 'db':
             del new_dict["password"]
         return new_dict
 

@@ -7,6 +7,7 @@ from models import storage
 from flask import jsonify
 
 
+
 @app_views.route('/users', strict_slashes=False)
 def users():
     """ get all State instance from the database
@@ -18,7 +19,7 @@ def users():
         result.append(obj.to_dict())
     return (jsonify(result))
 
-@get.route('/users/<string:user_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/users/<string:user_id>', methods=['GET'], strict_slashes=False)
 def get():
     """ Retrieves the list of all User objects """
     result = storage.get(User, user_id)
@@ -26,7 +27,7 @@ def get():
         abort (404)
     return (jsonify(result.to_dict()))
 
-@delete.route('/users/<string:user_id>', method=['GET', 'DELETE'], strict_slashes=False)
+@app_views.route('/users/<string:user_id>', method=['GET', 'DELETE'], strict_slashes=False)
 def delete():
     """Delete a User object"""
     result = storage.get(User, user_id)
@@ -36,7 +37,7 @@ def delete():
     storage.save()
     return (jsonify({}), 200)
 
-@create.route('/users/<string:user_id>', method=['POST'])
+@app_views.route('/users/<string:user_id>', method=['POST'])
 def post():
     """transform the HTTP body request in json format 
     to a dictionary containing the items email and password
@@ -57,4 +58,32 @@ def post():
     new = User(email=request.get_json(['email']), 
                password=request.get_json(['password'])
     new.save()
+    return (jsonify(new.to_dict()), 201)
+
+
+
+@app_views.route('/users/<string:user_id>', method=['POST'])
+def post():
+    """transform the HTTP body request in json format
+    to a dictionary containing the items email and password
+    """
+    try:
+        req = request.get_json(force=True)
+    except Exception:
+        abort(400, description="Not a JSON")
+
+    email = req.get('email')
+    if email is None:
+        return abort(400, description='Missing email')
+    plain_pass = req.get('passowrd')
+    if plain_pass is None:
+        abort(400, description='Missing password')
+    first_name = req.get('first_name')
+    last_name = req.get('last_name')
+    new = User(email=email,
+               pasword=plain_pass,
+               first_name=first_name,
+               last_name=last_name)
+    new.save()
+    storage.save()
     return (jsonify(new.to_dict()), 201)
