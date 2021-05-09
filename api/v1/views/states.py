@@ -75,7 +75,7 @@ def create_state():
 
     if req.get('name') is None:
         abort(400, description='Missing name')
-    new_State = State(**req)
+    new_State = State(req)
     storage.new(new_State)
     storage.save()
     return jsonify(new_State.to_dict()), 201

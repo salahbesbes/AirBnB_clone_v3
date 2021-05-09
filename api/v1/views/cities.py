@@ -79,7 +79,7 @@ def create_city(state_id):
 
     if req.get('name') is None:
         abort(400, description='Missing name')
-    new_city = City(**req, state_id=state_id)
+    new_city = City(req, state_id=state_id)
     storage.new(new_city)
     storage.save()
     return jsonify(new_city.to_dict()), 201

@@ -73,7 +73,7 @@ def create_amenity():
 
     if req.get('name') is None:
         abort(400, description='Missing name')
-    new_amenity = Amenity(**req)
+    new_amenity = Amenity(req)
     storage.new(new_amenity)
     storage.save()
     return jsonify(new_amenity.to_dict()), 201
