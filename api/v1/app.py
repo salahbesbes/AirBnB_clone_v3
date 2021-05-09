@@ -24,9 +24,9 @@ def handle_exception(e):
     """Return JSON instead of HTML for HTTP errors."""
     # TODO: explore the e Exception methods
     if e.code == 404:
-        return jsonify({"error": e.description})
+        return jsonify({"error": e.description}), 404
     if e.code == 400:
-        return jsonify({"error": e.description})
+        return jsonify({"error": e.description}), 400
 
 
 if __name__ == '__main__':
