@@ -19,6 +19,7 @@ def users():
         result.append(obj.to_dict())
     return (jsonify(result))
 
+
 @get.route('/users/<string:user_id>', methods=['GET'], strict_slashes=False)
 def get():
     """ Retrieves the list of all User objects """
@@ -27,7 +28,9 @@ def get():
         abort(404)
     return (jsonify(result.to_dict()))
 
-@delete.route('/users/<string:user_id>', method=['GET', 'DELETE'], strict_slashes=False)
+
+@delete.route('/users/<string:user_id>', method=['GET', 'DELETE'],
+              strict_slashes=False)
 def delete():
     """Delete a User object"""
     result = storage.get(User, user_id)
@@ -37,39 +40,41 @@ def delete():
     storage.save()
     return (jsonify({}), 200)
 
+
 @create.route('/users/<string:user_id>', method=['POST'], strict_slashes=False)
 def post():
     """Creates a User object """
     if request.get_json() is None:
-        return (jsonify({'error' : 'Not a JSON'}), 400)
+        return (jsonify({'error': 'Not a JSON'}), 400)
     mail = 0
     pwd = 0
     for key in request.get_json().keys():
         if key == 'email':
             mail += 1
-        if key == 'password'
+        if key == 'password':
             pwd += 1
     if mail < 1:
         return (jsonify({'error': 'Missing email'}), 400)
     if pwd < 1:
         return (jsonify({'error': 'Missing password'}), 400)
-    new = User(email=request.get_json(['email']), 
+    new = User(email=request.get_json(['email']),
                password=request.get_json(['password'])
     new.save()
     return (jsonify(new.to_dict()), 201)
 
-@update.route('/users/<string:user_id>', method['PUT', 'GET'], strict_slashes=False)
-def put()
+@update.route('/users/<string:user_id>', method['PUT', 'GET'],
+              strict_slashes=False)
+def put():
     """Updates a User object"""
-    result = storage.get(User, user_id) 
+    result = storage.get(User, user_id)
     if result is None:
         abort(404)
     else:
         if request.get_json is None:
-            return (jsonify({'error' : 'not JSON'}), 404)
+            return (jsonify({'error' : 'not JSON'}), 400)
         to_ignore['id', 'email', 'created_at', 'updated_at']
         for key, value in request.get_json().items:
             if key not in to_ignore:
                 setattr(User, key, value)
         User.save()
-        return (jsonify(user.to_dict()), 200) 
+        return (jsonify(user.to_dict()), 200)
