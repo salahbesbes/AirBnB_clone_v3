@@ -36,13 +36,11 @@ def delete():
     storage.save()
     return (jsonify({}), 200)
 
-@create.route('/users/<string:user_id>', method=['POST'])
+@create.route('/users/<string:user_id>', method=['POST'], strict_slashes=False)
 def post():
-    """transform the HTTP body request in json format 
-    to a dictionary containing the items email and password
-    """
-    if request.get_json() is None:
-        return (jsonify({'error' : 'Not a JSON', 400)
+    """Creates a User object """
+    if request.get_json is None:
+        return (jsonify({'error' : 'Not a JSON'}), 400)
     mail = 0
     pwd = 0
     for key in request.get_json().keys():
@@ -59,4 +57,18 @@ def post():
     new.save()
     return (jsonify(new.to_dict()), 201)
 
-@put.route()
+@update.route('/users/<string:user_id>', method['PUT', 'GET'], strict_slashes=False)
+def put()
+    """Updates a User object"""
+    result = storage.get(User, user_id) 
+    if result is None:
+        abort (404)
+    else:
+        if request.get_json is None:
+            return (jsonify({'error' : 'not JSON'}), 404)
+        to_ignore['id', 'email', 'created_at', 'updated_at']
+        for key, value in request.get_json().items:
+            if key not in to_ignore:
+                setattr(User, key, value)
+        User.save()
+        return (jsonify(user.to_dict()), 200) 
