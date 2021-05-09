@@ -26,7 +26,7 @@ def handle_exception(e):
         return jsonify({"error": e.description}), 400
 
 
-@app.errorhandler(HTTPException)
+@app.errorhandler(404)
 def handle_404(e):
     """ handle 404 """
     return jsonify({"error": "Not Found"}), 404
