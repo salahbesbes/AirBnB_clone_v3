@@ -29,9 +29,11 @@ def handle_exception(e):
     #     "name": e.name,
     #     "description": e.description,
     # })
-    # if e.code == 404:
-    #     return jsonify({"error": "Not Found"})
-    return jsonify({"error": e.description})
+    if e.code == 404:
+        return jsonify({"error": e.description})
+    if e.code == 400:
+        return jsonify({"error": e.description})
+    # return jsonify({"error": e.description})
 
 
 if __name__ == '__main__':
