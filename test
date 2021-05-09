@@ -1,0 +1,33 @@
+
+
+etud 
+    id
+    nom
+    classe
+    
+
+
+prof
+    id
+    nom
+
+
+prof_etud
+    #etud.id
+    #prof.id
+
+etued: 1 ... 10
+
+prof 100..150
+
+
+prof_etud
+1 150 100dt
+2 122 50dt
+1 101
+2 150 80dt
+1 100
+2 110
+
+
+

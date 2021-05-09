@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """ holds class User"""
+import hashlib
 import models
 from models.base_model import BaseModel, Base
 from os import getenv
@@ -25,6 +26,15 @@ class User(BaseModel, Base):
         password = ""
         first_name = ""
         last_name = ""
+
+    @property
+    def password(self):
+        """The password property."""
+        return self.password
+
+    @password.setter
+    def password(self, plain_password):
+        self.password = hashlib.md5(plain_password.encode('utf8')).hexdigest()
 
     def __init__(self, *args, **kwargs):
         """initializes user"""

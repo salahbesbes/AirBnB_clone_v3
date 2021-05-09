@@ -33,7 +33,7 @@ def get_state(id):
         if obj_id == id:
             return jsonify(obj.to_dict())
     # if not found raise 404 error
-    return abort(404)
+    return abort(404, description="Not Found")
 
 
 @app_views.route('/states/<id>',
@@ -98,7 +98,7 @@ def update_state(state_id):
 
     obj_found = storage.get(State, state_id)
     if obj_found is None:
-        abort(404)
+        abort(404, description="Not Found")
     req = request.get_json()  # data sent along with the request
 
     exclude = ['id', 'created_at', 'updated_at']

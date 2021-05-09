@@ -28,8 +28,9 @@ def get_amenity(amenity_id):
         @app.errorhandler(HTTPException) in app.py file handle it
     """
     amenity = storage.get(Amenity, amenity_id)
+    print(amenity)
     if amenity is None:
-        abort(404)
+        return abort(404, description="Not Found")
     return amenity.to_dict()
 
 
@@ -49,7 +50,7 @@ def delete_amenity(amenity_id):
         storage.delete(amenity)
         storage.save()
         return {}
-    abort(404)
+    abort(404, description="Not Found")
 
 
 @app_views.route('/amenities',
@@ -95,7 +96,7 @@ def update_amenity(amenity_id):
 
     obj_found = storage.get(Amenity, amenity_id)
     if obj_found is None:
-        abort(404)
+        abort(404, description="Not Found")
     req = request.get_json()  # data sent along with the request
 
     exclude = ['id', 'created_at', 'updated_at']

@@ -1,0 +1,17 @@
+{
+  "State.81d2c827-7bb9-4ccb-ab7a-a8f200612738": {
+    "name": "California",
+    "created_at": "2021-05-09T00:58:12.646552",
+    "updated_at": "2021-05-09T00:58:12.646625",
+    "id": "81d2c827-7bb9-4ccb-ab7a-a8f200612738",
+    "__class__": "State"
+  },
+  "City.17f53c23-e079-45a0-8915-ed1c15690d90": {
+    "state_id": "81d2c827-7bb9-4ccb-ab7a-a8f200612738",
+    "name": "San Francisco",
+    "created_at": "2021-05-09T00:58:12.647196",
+    "updated_at": "2021-05-09T00:58:12.647247",
+    "id": "17f53c23-e079-45a0-8915-ed1c15690d90",
+    "__class__": "City"
+  }
+}
