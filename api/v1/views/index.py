@@ -18,6 +18,8 @@ classes = {"Amenity": Amenity, "City": City,
 
 @app_views.route('/status', strict_slashes=False)
 def status():
+    """ get all states
+    """
     result = {}
     for key, cls in classes.items():
         result[key] = len(storage.all(cls))
