@@ -2,7 +2,7 @@
 """ modules """
 from os import getenv
 from flask import Flask
-from flask.json import jsonify
+from flask import jsonify
 from werkzeug.exceptions import HTTPException
 from models import storage
 from api.v1.views import app_views

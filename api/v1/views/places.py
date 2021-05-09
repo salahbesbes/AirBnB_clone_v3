@@ -5,7 +5,7 @@ from flask import abort, request
 from models.city import City
 from api.v1.views import app_views
 from models import storage
-from flask.json import jsonify
+from flask import jsonify
 
 
 @app_views.route('/cities/<city_id>/places', strict_slashes=False)
