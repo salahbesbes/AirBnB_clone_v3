@@ -3,7 +3,7 @@
 from os import getenv
 from flask import Flask
 from flask.json import jsonify
-# from werkzeug.exceptions import HTTPException
+from werkzeug.exceptions import HTTPException
 from models import storage
 from api.v1.views import app_views
 from flask_cors import CORS
@@ -19,7 +19,7 @@ def teardown_db(exception):
     storage.close()
 
 
-@app.errorhandler(404)
+@app.errorhandler(HTTPException)
 def handle_exception(e):
     """Return JSON instead of HTML for HTTP errors."""
     # TODO: explore the e Exception methods

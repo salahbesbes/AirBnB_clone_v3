@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 """ modules """
 from models.place import Place
-from flask import jsonify, abort, request
+from flask import abort, request
 from models.city import City
 from api.v1.views import app_views
 from models import storage
+from flask.json import jsonify
 
 
 @app_views.route('/cities/<city_id>/places', strict_slashes=False)
