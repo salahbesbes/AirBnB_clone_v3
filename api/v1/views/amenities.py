@@ -31,7 +31,7 @@ def get_amenity(amenity_id):
     amenity = storage.get(Amenity, amenity_id)
     print(amenity)
     if amenity is None:
-        return abort(404, description="Not Found")
+        abort(404, description="Not Found")
     return jsonify(amenity.to_dict())
 
 
