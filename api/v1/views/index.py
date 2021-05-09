@@ -18,7 +18,14 @@ classes = {"Amenity": Amenity, "City": City,
 
 @app_views.route('/status', strict_slashes=False)
 def status():
-    """ get all states
+    """ Status of API """
+    ok_status = {"status": "OK"}
+    return jsonify(ok_status)
+
+
+@app_views.route('/stats', strict_slashes=False)
+def status():
+    """ get all cls
     """
     result = {}
     for key, cls in classes.items():
