@@ -24,7 +24,7 @@ def status():
 
 
 @app_views.route('/stats', strict_slashes=False)
-def status():
+def all_classes():
     """ get all cls
     """
     result = {}
