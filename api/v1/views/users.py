@@ -36,7 +36,7 @@ def delete():
     storage.save()
     return (jsonify({}), 200)
 
-@creare.route('/users/<string:user_id>', method=['POST'])
+@create.route('/users/<string:user_id>', method=['POST'])
 def post():
     """transform the HTTP body request in json format 
     to a dictionary containing the items email and password
