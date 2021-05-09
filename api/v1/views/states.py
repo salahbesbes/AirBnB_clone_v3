@@ -83,6 +83,8 @@ def update_state(state_id):
     """
     try:
         req = request.get_json(force=True)
+        if request.headers.get('Content-Type') != 'application/json':
+            abort(400, description="Not a JSON")
     except Exception:
         abort(400, description="Not a JSON")
 
