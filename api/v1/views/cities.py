@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 """ modules """
 from models.state import State
-from flask import jsonify, abort, request
+from flask import abort, request
 from models.city import City
 from api.v1.views import app_views
 from models import storage
+from flask import jsonify
 
 
 @app_views.route('/states/<state_id>/cities', strict_slashes=False)
@@ -16,7 +17,7 @@ def cities_of_state(state_id):
     result = []
     state = storage.get(State, state_id)
     if state is None:
-        abort(404)
+        abort(404, description="Not Found")
     for obj in state.cities:
         result.append(obj.to_dict())
     return jsonify(result)
@@ -33,8 +34,8 @@ def get_city(city_id):
     """
     city = storage.get(City, city_id)
     if city is None:
-        abort(404)
-    return city.to_dict()
+        abort(404, description="Not Found")
+    return jsonify(city.to_dict())
 
 
 @app_views.route('/cities/<city_id>',
@@ -53,7 +54,7 @@ def delete_city(city_id):
         storage.delete(city)
         storage.save()
         return {}
-    abort(404)
+    abort(404, description="Not Found")
 
 
 @app_views.route('/states/<state_id>/cities',
@@ -74,11 +75,11 @@ def create_city(state_id):
         abort(400, description="Not a JSON")
 
     if storage.get(State, state_id) is None:
-        abort(404)
+        abort(404, description="Not Found")
 
     if req.get('name') is None:
         abort(400, description='Missing name')
-    new_city = City(**req, state_id=state_id)
+    new_city = City(state_id=state_id, **req)
     storage.new(new_city)
     storage.save()
     return jsonify(new_city.to_dict()), 201
@@ -101,7 +102,7 @@ def update_city(city_id):
         abort(400, description="Not a JSON")
     city_found = storage.get(City, city_id)
     if city_found is None:
-        abort(404)
+        abort(404, description="Not Found")
     exclude = ['id', 'created_at', 'updated_at', 'state_id']
     # create a copy of the req without excluded keys
     req = {k: v for k, v in req.items() if k not in exclude}

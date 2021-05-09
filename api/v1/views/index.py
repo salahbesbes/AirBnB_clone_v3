@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ modules """
-from flask.json import jsonify
+from flask import jsonify
 from api.v1.views import app_views
 from models import storage
 from models.city import City
@@ -11,14 +11,23 @@ from models.user import User
 from models.amenity import Amenity
 
 
-classes = {"Amenity": Amenity, "City": City,
-           "Place": Place, "Review": Review,
-           "State": State, "User": User}
+classes = {"amenities": Amenity, "cities": City,
+           "places": Place, "reviews": Review,
+           "states": State, "users": User}
 
 
 @app_views.route('/status', strict_slashes=False)
 def status():
+    """ Status of API """
+    ok_status = {"status": "OK"}
+    return jsonify(ok_status)
+
+
+@app_views.route('/stats', strict_slashes=False)
+def all_classes():
+    """ get all cls
+    """
     result = {}
     for key, cls in classes.items():
-        result[key] = len(storage.all(cls))
+        result[key] = storage.count(cls)
     return jsonify(result)

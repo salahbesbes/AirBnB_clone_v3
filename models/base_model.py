@@ -5,11 +5,10 @@ Contains class BaseModel
 
 from datetime import datetime
 import models
-from os import getenv
-import sqlalchemy
 from sqlalchemy import Column, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 import uuid
+import hashlib
 
 time = "%Y-%m-%dT%H:%M:%S.%f"
 
@@ -31,6 +30,8 @@ class BaseModel:
         if kwargs:
             for key, value in kwargs.items():
                 if key != "__class__":
+                    # if key == 'password':  # if plain password passed hash it
+                    #     value = hashlib.md5(value.encode('utf8')).hexdigest()
                     setattr(self, key, value)
             if kwargs.get("created_at", None) and type(self.created_at) is str:
                 self.created_at = datetime.strptime(kwargs["created_at"], time)
@@ -68,6 +69,10 @@ class BaseModel:
         new_dict["__class__"] = self.__class__.__name__
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
+
+        plain_password = new_dict.get('password')
+        if plain_password and models.storage_t == 'db':
+            del new_dict["password"]
         return new_dict
 
     def delete(self):
