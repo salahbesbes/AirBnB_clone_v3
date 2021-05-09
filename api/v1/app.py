@@ -3,14 +3,14 @@
 from os import getenv
 from flask import Flask
 from flask.json import jsonify
-from werkzeug.exceptions import HTTPException
+# from werkzeug.exceptions import HTTPException
 from models import storage
 from api.v1.views import app_views
 from flask_cors import CORS
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
-CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
+# CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
 
 
 @app.teardown_appcontext
@@ -19,7 +19,7 @@ def teardown_db(exception):
     storage.close()
 
 
-@app.errorhandler(HTTPException)
+@app.errorhandler(404)
 def handle_exception(e):
     """Return JSON instead of HTML for HTTP errors."""
     # TODO: explore the e Exception methods
@@ -37,4 +37,4 @@ def handle_exception(e):
 if __name__ == '__main__':
     host = getenv('HBNB_API_HOST', default='0.0.0.0')
     port = getenv('HBNB_API_PORT', default='5000')
-    app.run(port=port, host=host, threaded=True, debug=True)
+    app.run(port=port, host=host)
