@@ -43,8 +43,8 @@ def post():
     """
     if request.get_json() is None:
         return (jsonify({'error' : 'Not a JSON', 400)
-    key = 0
     mail = 0
+    pwd = 0
     for key in request.get_json().keys():
         if key == 'email':
             mail += 1
