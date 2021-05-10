@@ -17,7 +17,7 @@ def places_of_city(city_id):
     result = []
     city = storage.get(City, city_id)
     if city is None:
-        abort(404, description="Not Found")
+        abort(404)
     for obj in city.places:
         result.append(obj.to_dict())
     return jsonify(result)
@@ -34,7 +34,7 @@ def get_place(place_id):
     """
     place = storage.get(Place, place_id)
     if place is None:
-        abort(404, description="Not Found")
+        abort(404)
     return jsonify(place.to_dict())
 
 
@@ -54,7 +54,7 @@ def delete_place(place_id):
         storage.delete(place)
         storage.save()
         return {}
-    abort(404, description="Not Found")
+    abort(404)
 
 
 @app_views.route('/cities/<city_id>/places',
@@ -77,7 +77,7 @@ def create_place(city_id):
         abort(400, description="Not a JSON")
 
     if storage.get(City, city_id) is None:
-        abort(404, description="Not Found")
+        abort(404)
 
     if req.get('name') is None:
         abort(400, description='Missing name')
@@ -104,7 +104,7 @@ def update_place(place_id):
         abort(400, description="Not a JSON")
     place_found = storage.get(Place, place_id)
     if place_found is None:
-        abort(404, description="Not Found")
+        abort(404)
     exclude = ['id', 'created_at', 'updated_at', 'city_id']
     # create a copy of the req without excluded keys
     req = {k: v for k, v in req.items() if k not in exclude}
