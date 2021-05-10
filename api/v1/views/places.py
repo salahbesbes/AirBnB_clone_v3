@@ -53,7 +53,7 @@ def delete_place(place_id):
     if place:
         storage.delete(place)
         storage.save()
-        return {}
+        return {}, 200
     abort(404)
 
 
