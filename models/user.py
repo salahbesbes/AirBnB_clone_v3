@@ -28,13 +28,12 @@ class User(BaseModel, Base):
     def __init__(self, *args, **kwargs):
         """initializes user"""
         super().__init__(*args, **kwargs)
-        self.password = md5(self.password.encode('utf8')).hexdigest()
+        self.__password = md5(self.__password.encode()).hexdigest()
 
-    if models.storage_t != 'db':
-        @property
-        def password(self):
-            return self._password
+    # @property
+    # def password(self):
+    #     return self.__password
 
-        @password.setter
-        def password(self, plain_pass=''):
-            self._password = md5(plain_pass.encode('utf8')).hexdigest()
+    # @password.setter
+    # def password(self, plain_pass):
+    #     self.__password = md5(plain_pass.encode()).hexdigest()

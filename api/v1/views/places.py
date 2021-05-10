@@ -1,12 +1,15 @@
 #!/usr/bin/python3
 """ modules """
+from api.v1.views.states import all_states
 from models.place import Place
-from flask import abort, request
+from flask import abort, json, request
 from models.city import City
 from models.user import User
+from models.state import State
 from api.v1.views import app_views
 from models import storage
-from flask import jsonify
+from flask import jsonify, redirect, url_for
+from api.v1.views.cities import cities_of_state
 
 
 @app_views.route('/cities/<city_id>/places', strict_slashes=False)
@@ -120,3 +123,70 @@ def update_place(place_id):
     place_found.save()
     storage.save()
     return jsonify(place_found.to_dict()), 200
+
+
+def retrive_class(cls):
+    """ return all class
+
+    Returns:
+        [type]: [description]
+    """
+    return storage.all(cls)
+
+
+def all_places_per_state(state_id):
+    """ get all place per state
+    """
+    all_places = set()
+    state = storage.get(State, state_id)
+    if state is None:
+        abort(404)
+    for city in state.cities:
+        for place in city.places:
+            all_places.add(place)
+    return all_places
+
+
+def all_places_per_city(city_id):
+    """ get all place per city
+    """
+    all_places = set()
+    city = storage.get(City, city_id)
+    if city is None:
+        abort(404)
+    for place in city.places:
+        all_places.add(place)
+    return all_places
+
+
+@app_views.route('/places_search',
+                 methods=['GET'],
+                 strict_slashes=False)
+def places_search():
+    """ place search 
+    """
+    try:
+        req = request.get_json(force=True)
+    except Exception:
+        abort(400, description="Not a JSON")
+    all_places = set()
+    states = req.get('states') or []
+    cities = req.get('cities') or []
+    if states is None or states == [] and cities is None or cities == []:
+        all_states = storage.all(State)
+        for state_id in all_states:
+            res = all_places_per_state(state_id)
+            all_places.update(res)
+        all_places = [place.to_dict() for place in all_places]
+        return jsonify(all_places)
+    
+    for state_id in states:
+        res = all_places_per_state(state_id)
+        all_places.update(res)
+
+    for city_id in cities:
+        res = all_places_per_city(city_id)
+        all_places.update(res)
+
+    all_places = [place.to_dict() for place in all_places]
+    return jsonify(all_places)
