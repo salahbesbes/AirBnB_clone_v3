@@ -21,8 +21,9 @@ from models import storage
 # city.save()
 
 # # creation of a User
-# user = User(email="john@snow.com", password="johnpwd")
-# user.save()
+user = User(email="john@snow.com", password="johnpwd")
+user.save()
+storage.save()
 # print(user.password)
 # user.password = 'modified'
 # print(user.password)
