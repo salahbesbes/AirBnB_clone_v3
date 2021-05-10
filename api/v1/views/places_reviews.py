@@ -61,3 +61,22 @@ def post_review(place_id):
     new = Review(place_id=place, user_id=user_id, text=review_text)
     return (jsonify(new.to_dict()), 201)
 
+
+
+@app_views.route('reviews/<review_id>', methods=['PUT'],
+                  strict_slash=False)
+def update_review(review_id):
+    """ Updates a Review object"""
+    old_review = storage.get("review_id", review_id)
+    if storage.get("review_id", old_review) is None:
+        abort (404)
+    review_updated = request.get_json()
+    if review_updated is None:
+        return (jsonify({"error" : "Not a JSON"}), 400)
+    to_ignore = ["id", "user_id", "place_id", "created_at", "updated_at"]
+    for key, value in review_updated.items():
+            if key not in to_ignore:
+                setattr(old_review, key, value)
+    old_review.save()
+    storage.save()
+    return (jsonify(old_review.to_dict()), 200)
