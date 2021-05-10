@@ -8,7 +8,7 @@ from models.user import User
 from models.place import Place
 
 
-@app_views.route('places/<place_id>/reviews', strict_slashes=False)
+@app_views.route('/places/<place_id>/reviews', strict_slashes=False)
 def all_reviews(place_id):
     """Retrieves the list of all Review objects of a Place"""
     all_reviews = []
@@ -16,7 +16,7 @@ def all_reviews(place_id):
     if place is None:
         abort(404)
     for review in place.reviews:
-        all_reviews.append(review.dict())
+        all_reviews.append(review.to_dict())
     return (jsonify(all_reviews))
 
 
@@ -27,7 +27,7 @@ def get_review(review_id):
     review_to_get = storage.get(Review, review_id)
     if review_to_get is None:
         abort(404)
-    return jsonify(review_to_get.dict())
+    return jsonify(review_to_get.to_dict())
 
 
 @app_views.route('/reviews/<review_id>', methods=['DELETE'],
@@ -42,7 +42,7 @@ def delete_review(review_id):
     return jsonify('{}'), 200
 
 
-@app_views.route('places/<place_id>/reviews', method=['POST'],
+@app_views.route('/places/<place_id>/reviews', methods=['POST'],
                  strict_slashes=False)
 def post_review(place_id):
     """Creates a Review"""
@@ -55,7 +55,7 @@ def post_review(place_id):
     user_id = review_to_post.get("user_id")
     if user_id is None:
         return (jsonify({"error": "Missing user_id"}), 400)
-    user_found = storage.get("user_id", review_to_post['user_id'])
+    user_found = storage.get(User, review_to_post['user_id'])
     if user_found is None:
         abort(404)
     review_text = review_to_post.get("text")
@@ -68,7 +68,7 @@ def post_review(place_id):
 
 
 @app_views.route('/reviews/<review_id>', methods=['PUT'],
-                 strict_slash=False)
+                 strict_slashes=False)
 def update_review(review_id):
     """ Updates a Review object"""
     old_review = storage.get(Review, review_id)
@@ -81,6 +81,7 @@ def update_review(review_id):
     for key, value in req_body.items():
         if key not in to_ignore:
             setattr(old_review, key, value)
+
     old_review.save()
     storage.save()
     return (jsonify(old_review.to_dict()), 200)
