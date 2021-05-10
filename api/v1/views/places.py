@@ -125,15 +125,6 @@ def update_place(place_id):
     return jsonify(place_found.to_dict()), 200
 
 
-def retrive_class(cls):
-    """ return all class
-
-    Returns:
-        [type]: [description]
-    """
-    return storage.all(cls)
-
-
 def all_places_per_state(state_id):
     """ get all place per state
     """
@@ -160,7 +151,7 @@ def all_places_per_city(city_id):
 
 
 @app_views.route('/places_search',
-                 methods=['GET'],
+                 methods=['POST'],
                  strict_slashes=False)
 def places_search():
     """ place search 
@@ -179,7 +170,7 @@ def places_search():
             all_places.update(res)
         all_places = [place.to_dict() for place in all_places]
         return jsonify(all_places)
-    
+
     for state_id in states:
         res = all_places_per_state(state_id)
         all_places.update(res)
