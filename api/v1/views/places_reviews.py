@@ -39,7 +39,7 @@ def delete_review(review_id):
         abort(404)
     review_to_delete.delete()
     storage.save()
-    return jsonify('{}'), 200
+    return {}
 
 
 @app_views.route('/places/<place_id>/reviews', methods=['POST'],
