@@ -35,7 +35,7 @@ def handle_404(e):
 @app.errorhandler(400)
 def handle_exceptions(e):
     """ handle 400 exceptions"""
-    return jsonify({"error": e.description}), 404
+    return jsonify({"error": e.description}), 400
 
 
 if __name__ == '__main__':
