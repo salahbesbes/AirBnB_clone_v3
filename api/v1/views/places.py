@@ -3,6 +3,7 @@
 from models.place import Place
 from flask import abort, request
 from models.city import City
+from models.user import User
 from api.v1.views import app_views
 from models import storage
 from flask import jsonify
@@ -17,7 +18,7 @@ def places_of_city(city_id):
     result = []
     city = storage.get(City, city_id)
     if city is None:
-        abort(404, description="Not Found")
+        abort(404)
     for obj in city.places:
         result.append(obj.to_dict())
     return jsonify(result)
@@ -34,7 +35,7 @@ def get_place(place_id):
     """
     place = storage.get(Place, place_id)
     if place is None:
-        abort(404, description="Not Found")
+        abort(404)
     return jsonify(place.to_dict())
 
 
@@ -54,7 +55,7 @@ def delete_place(place_id):
         storage.delete(place)
         storage.save()
         return {}
-    abort(404, description="Not Found")
+    abort(404)
 
 
 @app_views.route('/cities/<city_id>/places',
@@ -70,15 +71,18 @@ def create_place(city_id):
     Returns:
         json: new instance dict created
     """
-
+    if storage.get(City, city_id) is None:
+        abort(404)
     try:
         req = request.get_json(force=True)
     except Exception:
         abort(400, description="Not a JSON")
-
-    if storage.get(City, city_id) is None:
-        abort(404, description="Not Found")
-
+    user_id = req.get('user_id')
+    if user_id is None:
+        abort(400, description='Missing user_id')
+    user_related = storage.get(User, user_id)
+    if user_related is None:
+        abort(404)
     if req.get('name') is None:
         abort(400, description='Missing name')
     new_place = Place(city_id=city_id, **req)
@@ -104,7 +108,7 @@ def update_place(place_id):
         abort(400, description="Not a JSON")
     place_found = storage.get(Place, place_id)
     if place_found is None:
-        abort(404, description="Not Found")
+        abort(404)
     exclude = ['id', 'created_at', 'updated_at', 'city_id']
     # create a copy of the req without excluded keys
     req = {k: v for k, v in req.items() if k not in exclude}
