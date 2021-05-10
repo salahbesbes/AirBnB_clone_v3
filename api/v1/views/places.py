@@ -3,7 +3,6 @@
 from models.place import Place
 from flask import abort, request
 from models.city import City
-from models.user import User
 from api.v1.views import app_views
 from models import storage
 from flask import jsonify
@@ -24,8 +23,7 @@ def places_of_city(city_id):
     return jsonify(result)
 
 
-@app_views.route('/places/<place_id>', methods=['GET'],
-                 strict_slashes=False)
+@app_views.route('/places/<place_id>', strict_slashes=False)
 def get_place(place_id):
     """ get place from the database using the storage instance
     Args:
@@ -72,21 +70,20 @@ def create_place(city_id):
     Returns:
         json: new instance dict created
     """
-    if storage.get(City, city_id) is None:
-        abort(404)
+
     try:
         req = request.get_json(force=True)
     except Exception:
         abort(400, description="Not a JSON")
-    user_id = req.get('user_id')
-    if user_id is None:
-        abort(400, description='Missing user_id')
-    user_related = storage.get(User, user_id)
-    if user_related is None:
+
+    if storage.get(City, city_id) is None:
         abort(404)
+    if req.get('user_id') is None:
+        abort(400, description='Missing user_id')
+    
     if req.get('name') is None:
         abort(400, description='Missing name')
-    new_place = Place(city_id=city_id, name=req.get('name'), user_id=user_id)
+    new_place = Place(city_id=city_id, **req)
     storage.new(new_place)
     storage.save()
     return jsonify(new_place.to_dict()), 201
@@ -103,15 +100,14 @@ def update_place(place_id):
     Returns:
         json: dict of the instance
     """
-    place_found = storage.get(Place, place_id)
-    if place_found is None:
-        abort(404)
-
     try:
         req = request.get_json(force=True)
     except Exception:
         abort(400, description="Not a JSON")
-    exclude = ['id', 'created_at', 'updated_at', 'city_id','user_id']
+    place_found = storage.get(Place, place_id)
+    if place_found is None:
+        abort(404)
+    exclude = ['id', 'created_at', 'updated_at', 'city_id']
     # create a copy of the req without excluded keys
     req = {k: v for k, v in req.items() if k not in exclude}
     for key, val in req.items():
