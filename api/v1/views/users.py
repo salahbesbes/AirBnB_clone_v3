@@ -39,7 +39,7 @@ def delete_user(user_id):
 
     storage.delete(result)
     storage.save()
-    return ({}, 200)
+    return (jsonify({}), 200)
 
 
 @app_views.route('/users', methods=['POST'], strict_slashes=False)
@@ -74,7 +74,6 @@ def update_user(user_id):
         req = request.get_json()
         if req is None:
             return (jsonify({'error': 'Not JSON'}), 400)
-
         to_ignore = ['id', 'email', 'created_at', 'updated_at']
         for key, value in req.items():
             if key not in to_ignore:
