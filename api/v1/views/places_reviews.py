@@ -1,0 +1,41 @@
+#!/usr/bin/python
+"""holds places reviews"""
+from api.v1.views import app_views
+from flask import abort, jsonify, request
+from models import storage
+from models.review import Review
+from models.user import User
+from models.place import Place
+
+
+@app_views.route('places/<place_id>/reviews', strict_slashes=False)
+def all_reviews(place_id):
+    """Retrieves the list of all Review objects of a Place"""
+    all_reviews=[]
+    place = storage.get("Place", place_id)
+    if place is None:
+        abort (404)
+    for review in place.reviews:
+        all_reviews.append(review.dict())
+    return (jsonify(all_reviews))
+
+@app_views.route('reviews/<review_id>', methods=['GET'],
+                  strict_slashes=False)
+def get_review(review_id):
+    """Retrieves a Review object"""
+    review_to_get = storage.get(Review, review_id)
+    if review_to_get is None:
+        abort (404)
+    return jsonify(review_to_get.dict())
+
+@app_views.route('reviews/<review_id>', methods=['DELETE'],
+                  strict_slashes=False)
+def delete_review(review_id):
+    """Deletes a Review object"""
+    review_to_delete = storage.get(Review, review_id)
+    if review_to_delete is None:
+        abort (404)
+    review_to_delete.delete()
+    storage.save()
+    return jsonify('{}'), 200
+
