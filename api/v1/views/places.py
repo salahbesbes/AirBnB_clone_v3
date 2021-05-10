@@ -53,7 +53,7 @@ def delete_place(place_id):
     if place:
         storage.delete(place)
         storage.save()
-        return {}, 200
+        return {}
     abort(404)
 
 
@@ -78,9 +78,7 @@ def create_place(city_id):
 
     if storage.get(City, city_id) is None:
         abort(404)
-    if req.get('user_id') is None:
-        abort(400, description='Missing user_id')
-    
+
     if req.get('name') is None:
         abort(400, description='Missing name')
     new_place = Place(city_id=city_id, **req)
