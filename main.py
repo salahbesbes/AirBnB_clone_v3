@@ -8,25 +8,29 @@ from models.review import Review
 from models.state import State
 from models.user import User
 from models import storage
-# creation of a State
-state = State(name="California")
-state.save()
 
-# creation of a City
-city = City(state_id=state.id, name="San Francisco")
-city.save()
 
-# creation of a User
-user = User(email="john@snow.com", password="johnpwd")
-user.save()
-print(user.password)
-user.password = 'modified'
-print(user.password)
-# creation of 2 Places
-place_1 = Place(user_id=user.id, city_id=city.id, name="House 1")
-place_1.save()
-place_2 = Place(user_id=user.id, city_id=city.id, name="House 2")
-place_2.save()
+
+
+# # creation of a State
+# state = State(name="California")
+# state.save()
+
+# # creation of a City
+# city = City(state_id=state.id, name="San Francisco")
+# city.save()
+
+# # creation of a User
+# user = User(email="john@snow.com", password="johnpwd")
+# user.save()
+# print(user.password)
+# user.password = 'modified'
+# print(user.password)
+# # creation of 2 Places
+# place_1 = Place(user_id=user.id, city_id=city.id, name="House 1")
+# place_1.save()
+# place_2 = Place(user_id=user.id, city_id=city.id, name="House 2")
+# place_2.save()
 
 # # creation of 3 various Amenity
 # amenity_1 = Amenity(name="Wifi")
