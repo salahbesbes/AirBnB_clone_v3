@@ -31,6 +31,10 @@ def handle_404(e):
     """ handle 404 exception"""
     return jsonify({"error": "Not found"}), 404
 
+@app.errorhandler(HTTPException)
+def handle_404(e):
+    """ handle 404 exception"""
+    return jsonify({"error": e.description}), 404
 
 if __name__ == '__main__':
     host = getenv('HBNB_API_HOST', default='0.0.0.0')

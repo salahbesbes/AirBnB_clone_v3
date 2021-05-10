@@ -70,18 +70,21 @@ def create_place(city_id):
     Returns:
         json: new instance dict created
     """
-
+    if storage.get(City, city_id) is None:
+        abort(404)
     try:
         req = request.get_json(force=True)
     except Exception:
         abort(400, description="Not a JSON")
 
-    if storage.get(City, city_id) is None:
+    if req.get('user_id') is None:
+        abort(400, description='Missing user_id')
+    new_place = Place(city_id=city_id, **req)
+    if new_place is None:
         abort(404)
-
     if req.get('name') is None:
         abort(400, description='Missing name')
-    new_place = Place(city_id=city_id, **req)
+
     storage.new(new_place)
     storage.save()
     return jsonify(new_place.to_dict()), 201
