@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 """holds places reviews"""
 from api.v1.views import app_views
 from flask import abort, jsonify, request
