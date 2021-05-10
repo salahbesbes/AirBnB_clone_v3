@@ -39,7 +39,7 @@ def delete_user(user_id):
 
     storage.delete(result)
     storage.save()
-    return ({}, 200)
+    return (jsonify({}), 200)
 
 
 @app_views.route('/users', methods=['POST'], strict_slashes=False)
@@ -51,10 +51,10 @@ def create_user():
 
     email = req.get('email')
     if email is None:
-        (jsonify({'error': 'Missing email'}), 400)
+        return (jsonify({'error': 'Missing email'}), 400)
     password = req.get('password')
     if password is None:
-        (jsonify({'error': 'Missing password'}), 400)
+        return (jsonify({'error': 'Missing password'}), 400)
     exclude = ['id', 'created_at', 'updated_at']
     all_atributes_user_add = {k: v for k, v in req.items() if k not in exclude}
     new = User(**all_atributes_user_add)
@@ -74,7 +74,6 @@ def update_user(user_id):
         req = request.get_json()
         if req is None:
             return (jsonify({'error': 'Not JSON'}), 400)
-
         to_ignore = ['id', 'email', 'created_at', 'updated_at']
         for key, value in req.items():
             if key not in to_ignore:
