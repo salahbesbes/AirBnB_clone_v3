@@ -29,7 +29,7 @@ def handle_exception(e):
 @app.errorhandler(404)
 def handle_404(e):
     """ handle 404 exception"""
-    return jsonify({"error": "Not Found"}), 404
+    return jsonify({"error": "Not found"}), 404
 
 
 if __name__ == '__main__':
