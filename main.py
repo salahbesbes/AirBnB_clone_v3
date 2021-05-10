@@ -10,8 +10,6 @@ from models.user import User
 from models import storage
 
 
-
-
 # # creation of a State
 # state = State(name="California")
 # state.save()
@@ -23,10 +21,10 @@ from models import storage
 # # creation of a User
 user = User(email="john@snow.com", password="johnpwd")
 user.save()
-storage.save()
-# print(user.password)
-# user.password = 'modified'
-# print(user.password)
+# storage.save()
+print(user.password)
+user.password = 'modified'
+print(user.password)
 # # creation of 2 Places
 # place_1 = Place(user_id=user.id, city_id=city.id, name="House 1")
 # place_1.save()
