@@ -86,7 +86,7 @@ def create_place(city_id):
         abort(404)
     if req.get('name') is None:
         abort(400, description='Missing name')
-    new_place = Place(city_id=city_id, **req)
+    new_place = Place(city_id=city_id, name=req.get('name'), user_id=user_id)
     storage.new(new_place)
     storage.save()
     return jsonify(new_place.to_dict()), 201
@@ -103,14 +103,15 @@ def update_place(place_id):
     Returns:
         json: dict of the instance
     """
+    place_found = storage.get(Place, place_id)
+    if place_found is None:
+        abort(404)
+
     try:
         req = request.get_json(force=True)
     except Exception:
         abort(400, description="Not a JSON")
-    place_found = storage.get(Place, place_id)
-    if place_found is None:
-        abort(404)
-    exclude = ['id', 'created_at', 'updated_at', 'city_id']
+    exclude = ['id', 'created_at', 'updated_at', 'city_id','user_id']
     # create a copy of the req without excluded keys
     req = {k: v for k, v in req.items() if k not in exclude}
     for key, val in req.items():
