@@ -6,6 +6,7 @@ from api.v1.views import app_views
 from models import storage
 from flask import jsonify
 from flask import abort
+from hashlib import md5
 
 
 @app_views.route('/users', strict_slashes=False)
@@ -55,13 +56,9 @@ def create_user():
     password = req.get('password')
     if password is None:
         (jsonify({'error': 'Missing password'}), 400)
-    first_name = req.get('first_name')
-    last_name = req.get('last_name')
-
-    new = User(email=email,
-               password=password,
-               first_name=first_name,
-               last_name=last_name)
+    exclude = ['id', 'created_at', 'updated_at']
+    all_atributes_user_add = {k: v for k, v in req.items() if k not in exclude}
+    new = User(**all_atributes_user_add)
     new.save()
     storage.save()
     return (jsonify(new.to_dict()), 201)
@@ -82,6 +79,8 @@ def update_user(user_id):
         to_ignore = ['id', 'email', 'created_at', 'updated_at']
         for key, value in req.items():
             if key not in to_ignore:
+                if key == 'password':
+                    value = md5(value.encode('utf8')).hexdigest()
                 setattr(user_found, key, value)
         user_found.save()
         storage.save()

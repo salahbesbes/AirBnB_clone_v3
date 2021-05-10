@@ -16,7 +16,7 @@
   },
   "User.c2d2833e-b4a9-442b-9bd7-fe3894b72fdc": {
     "email": "john@snow.com",
-    "_password": "9ae73c65f418e6f79ceb4f0e4a4b98d5",
+    "_password": "4d22aad1febd3d187824b06c07d8e3fb",
     "created_at": "2021-05-09T21:40:24.100700",
     "updated_at": "2021-05-09T21:40:24.100753",
     "id": "c2d2833e-b4a9-442b-9bd7-fe3894b72fdc",
@@ -40,35 +40,12 @@
     "id": "6c27a55d-abc2-4898-9bb9-b7b4668c56ab",
     "__class__": "Place"
   },
-  "User.cf36f8b4-c809-4812-b96a-b1a1ca559a6c": {
+  "User.e891434f-5b4c-427c-856f-2d618e34922a": {
     "email": "john@snow.com",
-    "created_at": "2021-05-10T02:09:36.585286",
-    "updated_at": "2021-05-10T02:09:36.585380",
-    "id": "cf36f8b4-c809-4812-b96a-b1a1ca559a6c",
-    "__class__": "User"
-  },
-  "User.e147390b-930d-4bb3-92a2-d1cd005129ce": {
-    "email": "john@snow.com",
-    "_password": "7f9dbb28240af9d0898eab467b26c26e",
-    "created_at": "2021-05-10T02:12:21.268512",
-    "updated_at": "2021-05-10T02:12:21.268602",
-    "id": "e147390b-930d-4bb3-92a2-d1cd005129ce",
-    "__class__": "User"
-  },
-  "User.b11e50a6-629f-4adf-bab4-81d7e0731457": {
-    "email": "john@snow.com",
-    "_password": "7f9dbb28240af9d0898eab467b26c26e",
-    "created_at": "2021-05-10T02:12:30.313281",
-    "updated_at": "2021-05-10T02:12:30.313365",
-    "id": "b11e50a6-629f-4adf-bab4-81d7e0731457",
-    "__class__": "User"
-  },
-  "User.f87134ce-7f97-4510-b259-a32d12b824bf": {
-    "email": "john@snow.com",
-    "_password": "7f9dbb28240af9d0898eab467b26c26e",
-    "created_at": "2021-05-10T02:13:54.844227",
-    "updated_at": "2021-05-10T02:13:54.844315",
-    "id": "f87134ce-7f97-4510-b259-a32d12b824bf",
+    "_password": "08d719a679c4da34b6bc300ad254d7be",
+    "created_at": "2021-05-10T02:53:01.379118",
+    "updated_at": "2021-05-10T02:53:01.379213",
+    "id": "e891434f-5b4c-427c-856f-2d618e34922a",
     "__class__": "User"
   }
 }

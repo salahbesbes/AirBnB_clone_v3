@@ -70,7 +70,7 @@ class BaseModel:
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
         plain_password = new_dict.get('password')
-        if plain_password and models.storage_t == 'db':
+        if plain_password and models.storage_t != 'db':
             del new_dict["password"]
         return new_dict
 
