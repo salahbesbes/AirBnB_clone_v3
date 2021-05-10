@@ -3,6 +3,7 @@
 from models.place import Place
 from flask import abort, request
 from models.city import City
+from models.user import User
 from api.v1.views import app_views
 from models import storage
 from flask import jsonify
@@ -76,15 +77,15 @@ def create_place(city_id):
         req = request.get_json(force=True)
     except Exception:
         abort(400, description="Not a JSON")
-
-    if req.get('user_id') is None:
+    user_id = req.get('user_id')
+    if user_id is None:
         abort(400, description='Missing user_id')
-    new_place = Place(city_id=city_id, **req)
-    if new_place is None:
+    user_related = storage.get(User, user_id)
+    if user_related is None:
         abort(404)
     if req.get('name') is None:
         abort(400, description='Missing name')
-
+    new_place = Place(**req)
     storage.new(new_place)
     storage.save()
     return jsonify(new_place.to_dict()), 201
