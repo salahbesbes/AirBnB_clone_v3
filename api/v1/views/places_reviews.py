@@ -60,7 +60,7 @@ def post_review(place_id):
         abort(404)
     review_text = review_to_post.get("text")
     if review_text is None:
-        return (jsonify({'error': 'Missing text'}), 400)
+        return (jsonify({"error": "Missing text"}), 400)
     new = Review(**review_to_post)
     storage.new(new)
     storage.save()
