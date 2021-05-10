@@ -3,6 +3,7 @@
 from models.place import Place
 from flask import abort, request
 from models.city import City
+from models.user import User
 from api.v1.views import app_views
 from models import storage
 from flask import jsonify
@@ -81,6 +82,12 @@ def create_place(city_id):
 
     if req.get('name') is None:
         abort(400, description='Missing name')
+    user_id = req.get('user_id')
+    if user_id is None:
+        abort(400, description='Missing user_id')
+    current_user = storage.get(User, user_id)
+    if current_user is None:
+        abort(404)
     new_place = Place(city_id=city_id, **req)
     storage.new(new_place)
     storage.save()
@@ -105,7 +112,7 @@ def update_place(place_id):
     place_found = storage.get(Place, place_id)
     if place_found is None:
         abort(404)
-    exclude = ['id', 'created_at', 'updated_at', 'city_id']
+    exclude = ['id', 'created_at', 'updated_at', 'city_id', 'user_id']
     # create a copy of the req without excluded keys
     req = {k: v for k, v in req.items() if k not in exclude}
     for key, val in req.items():
