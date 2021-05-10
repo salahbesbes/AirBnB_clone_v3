@@ -51,10 +51,10 @@ def create_user():
 
     email = req.get('email')
     if email is None:
-        (jsonify({'error': 'Missing email'}), 400)
+        return (jsonify({'error': 'Missing email'}), 400)
     password = req.get('password')
     if password is None:
-        (jsonify({'error': 'Missing password'}), 400)
+        return (jsonify({'error': 'Missing password'}), 400)
     exclude = ['id', 'created_at', 'updated_at']
     all_atributes_user_add = {k: v for k, v in req.items() if k not in exclude}
     new = User(**all_atributes_user_add)
