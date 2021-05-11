@@ -64,7 +64,7 @@ def post_review(place_id):
     new = Review(**review_to_post)
     storage.new(new)
     storage.save()
-    return (jsonify(new), 201)
+    return (jsonify(new.to_dict()), 201)
 
 
 @app_views.route('/reviews/<review_id>', methods=['PUT'],
